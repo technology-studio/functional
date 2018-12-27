@@ -18,7 +18,8 @@
   "scripts": {
   },
   "dependencies": {
-    "@txo/flow": "^1.0.0"
+    "@txo/flow": "^1.0.0",
+    "immutability-helper": "^2.9.0"
   },
   "peerDependencies": {
     "@txo-peer-dep/log": "^1.0.1"
