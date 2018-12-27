@@ -18,7 +18,9 @@
   "scripts": {
   },
   "dependencies": {
+    "@txo/flow": "^1.0.0"
   },
   "peerDependencies": {
+    "@txo-peer-dep/log": "^1.0.1"
   }
 }
