@@ -14,25 +14,25 @@ const sample = { a: { b: { c: 1 } } }
 
 test('test replace with object', () => {
   const result = translateOnPath('a.b.c', sample, value => ({ d: 2 }))
-  expect(result).toEqual({ a: { b: { c: { d: 2 } } } })
+  expect(result).toStrictEqual({ a: { b: { c: { d: 2 } } } })
   expect(result !== sample).toBeTruthy()
 })
 
 test('test replace with same value', () => {
   const result = translateOnPath('a.b.c', sample, value => 1)
-  expect(result).toEqual({ a: { b: { c: 1 } } })
+  expect(result).toStrictEqual({ a: { b: { c: 1 } } })
   expect(result === sample).toBeTruthy()
 })
 
 test('test replace with different value', () => {
   const result = translateOnPath('a.b.c', sample, value => 2)
-  expect(result).toEqual({ a: { b: { c: 2 } } })
+  expect(result).toStrictEqual({ a: { b: { c: 2 } } })
   expect(result !== sample).toBeTruthy()
 })
 
 test('test replace with null', () => {
   const result = translateOnPath('a.b.c', sample, value => null)
-  expect(result).toEqual({ a: { b: { c: null } } })
+  expect(result).toStrictEqual({ a: { b: { c: null } } })
   expect(result !== sample).toBeTruthy()
 })
 
@@ -50,5 +50,13 @@ test('should keep leaf empty object', () => {
   const result = translateOnPath('a.b.c', sample, value => ({}), {
     keepEmptyObjectsAtTranlateResult: true,
   })
-  expect(result).toEqual({ a: { b: { c: {} } } })
+  expect(result).toStrictEqual({ a: { b: { c: {} } } })
+})
+
+test('should pass undefined value for translate in case path does not exist', () => {
+  const result = translateOnPath('a.b.d', sample, value => value, {
+    keepEmptyObjectsAtTranlateResult: true,
+  })
+  expect(result).toStrictEqual({ a: { b: { c: 1 } } })
+  expect(result).toBe(sample)
 })
