@@ -6,8 +6,11 @@
 
 ; Ignore unexpected extra "@providesModule"
 .*/node_modules/.*/node_modules/fbjs/.*
+<PROJECT_ROOT>/packages/.*/lib/.*
+<PROJECT_ROOT>/packages/.*/node_modules/.*
+<PROJECT_ROOT>/node_modules/.*
+!<PROJECT_ROOT>/node_modules/@txo.*
 <PROJECT_ROOT>/node_modules/@txo.*/node_modules/.*
-<PROJECT_ROOT>/node_modules/\([^@]\|@\([^t]\|t\([^x]\|x\([^o]\|$\)\|$\)\|$\)\|$\).*$
 
 ; Ignore duplicate module providers
 ; For RN Apps installed via npm, "Libraries" folder is inside
@@ -22,6 +25,9 @@
 
 ; Project based
 <PROJECT_ROOT>/__tests__/.*
+
+[declarations]
+<PROJECT_ROOT>/node_modules/@txo.*
 
 [include]
 
@@ -62,4 +68,4 @@ suppress_comment=\\(.\\|\n\\)*\\$FlowFixedInNextDeploy
 suppress_comment=\\(.\\|\n\\)*\\$FlowExpectedError
 
 [version]
-^0.102.0
+^0.116.0

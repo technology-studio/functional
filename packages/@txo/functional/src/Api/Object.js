@@ -25,7 +25,7 @@ export const clearUndefinedAttributes = <OBJECT: Object> (object: OBJECT) => {
 export const copyNotUndefinedAttributes = <SOURCE: Object, DESTINATION: Object> (
   source: SOURCE,
   destination: DESTINATION,
-  sourceAttributeToDestinationAttributeMap: LiteralMap<$Keys<SOURCE>, $Keys<DESTINATION>>
+  sourceAttributeToDestinationAttributeMap: LiteralMap<$Keys<SOURCE>, $Keys<DESTINATION>>,
 ): DESTINATION => {
   Object.entries(sourceAttributeToDestinationAttributeMap).forEach(([sourceKey, destinationKey]: [string, mixed]) => {
     const value = source[sourceKey]

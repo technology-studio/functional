@@ -8,9 +8,18 @@
 
 import {
   translateOnPath,
-  type ValueStructure,
   type Translate,
+  type ValueStructure,
 } from './Api/TranslateOnPath'
+import {
+  createPathIterator,
+  getPathIterator,
+} from './Api/Path'
+import {
+  getOnPath,
+  getOnPathIterator,
+} from './Api/GetOnPath'
+
 import {
   equalsStrictOnValues,
   isEmpty,
@@ -53,12 +62,16 @@ export {
   concatWithSep,
   containsPathSegmentList,
   copyNotUndefinedAttributes,
+  createPathIterator,
   debugDiffObjects,
   deepMergeIgnoreNil,
   deepObjectEqualsBySchema,
   equalsStrictOnValues,
   findById,
   getLastItem,
+  getOnPath,
+  getOnPathIterator,
+  getPathIterator,
   intersperseByCallback,
   isEmpty,
   isEmptyObject,

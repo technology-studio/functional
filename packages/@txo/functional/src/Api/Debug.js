@@ -24,7 +24,7 @@ export const debugDiffObjects = (left: any, right: any) => {
     result = Object.keys(right).reduce((subResult, key) => {
       const subLeft = left[key]
       const subRight = right[key]
-      if (!left.hasOwnProperty(key)) {
+      if (!Object.prototype.hasOwnProperty.call(left, key)) {
         subResult = (subResult || {}: Object)
         subResult[key] = ['DIFF', subLeft, subRight]
       }

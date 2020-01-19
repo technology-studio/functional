@@ -8,6 +8,8 @@
 
 import { Log } from '@txo-peer-dep/log'
 
+import { getPathIterator } from './Path'
+
 const log = new Log('txo.functional.Api.TranslateOnPath')
 
 export type ValueStructure<VALUE> = { [string]: ValueStructure<VALUE> | ?VALUE } | ?VALUE
@@ -25,25 +27,6 @@ const _defaultOptions: Options = {
   keepEmptyObjectsAtTranlateResult: false,
   ignoreMissingPath: false,
 }
-
-const createPathIterator = (pathList: string[]): $Shape<Iterator<string>> => {
-  var index: number = -1
-  const length = pathList.length
-  // $FlowExpectedError
-  return {
-    next: () => {
-      index += 1
-      const done = length <= index
-      return {
-        done,
-        value: done ? undefined : pathList[index],
-      }
-    },
-  }
-}
-
-const getPathIterator = (pathList: string[]): Iterator<string> =>
-  [].values === undefined ? createPathIterator(pathList) : pathList.values()
 
 export const translateOnPath = <VALUE>(
   path: ?string,

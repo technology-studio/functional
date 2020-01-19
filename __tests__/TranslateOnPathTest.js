@@ -6,9 +6,7 @@
  * @flow
  */
 
-'use strict'; // eslint-disable-line
-
-import { translateOnPath } from '../lib'
+import { translateOnPath } from '@txo/functional'
 
 const sample = { a: { b: { c: 1 } } }
 
