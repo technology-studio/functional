@@ -34,7 +34,7 @@
   "devDependencies": {
     "@babel/cli": "^7.6.0",
     "@babel/core": "^7.6.0",
-    "@txo-peer-dep/log": "^1.0.1",
+    "@txo-peer-dep/log": "^2.0.0",
     "@txo/babel-preset": "^1.0.0",
     "@txo/glow": "^1.2.3",
     "babel-core": "^7.0.0-bridge.0",
