@@ -45,6 +45,7 @@ import {
   isObject,
   keysToObject,
   removeKeys,
+  removeSubtree,
   shallowObjectDiff,
   shallowObjectEquals,
 } from './Api/Object'
@@ -81,6 +82,7 @@ export {
   nullIfEmpty,
   onlyOne,
   removeKeys,
+  removeSubtree,
   sequence,
   shallowObjectDiff,
   shallowObjectEquals,
