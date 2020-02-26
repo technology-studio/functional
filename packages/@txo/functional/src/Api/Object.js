@@ -152,7 +152,7 @@ export const deepMergeIgnoreNil = (left: any, right: any, key?: string) => {
 }
 
 export const removeSubtree = (obj: any, tree: any) => {
-  if (typeof obj === 'object' && !Array.isArray(obj)) {
+  if (isObject(obj) && !Array.isArray(obj)) {
     return Object.keys(obj).reduce((object, key) => {
       const subtree = tree[key]
       const subObj = obj[key]
