@@ -10,7 +10,7 @@ const isWrappedTypeName = (name: ?string): boolean => name === 'String' || name 
 
 const isWrappedType = (value: ?mixed): boolean => !!(value && typeof value === 'object' && value.constructor && isWrappedTypeName((value.constructor: any).name) && value.valueOf)
 
-export const isNullOrVoid = (value: ?mixed): boolean => value === null || value === undefined
+export const isNullOrVoid = (value: ?mixed): boolean %checks => value === null || value === undefined
 export const isEmpty = (value: ?mixed): boolean => isNullOrVoid(value) || (Array.isArray(value) && value.length === 0) || value === 0 ||
   value == '' || // eslint-disable-line eqeqeq
   !!(value && isWrappedType(value) && value.valueOf && isEmpty((value: any).valueOf()))
