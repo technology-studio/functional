@@ -27,9 +27,10 @@
   },
   "dependencies": {
     "@txo/flow": "^2.0.0",
+    "@txo/log": "^1.0.0",
     "immutability-helper": "^3.0.1"
   },
   "peerDependencies": {
-    "@txo-peer-dep/log": "^1.0.1"
+    "@txo-peer-dep/log": "^3.0.0"
   }
 }
