@@ -6,7 +6,7 @@
  * @flow
 **/
 
-import { Log } from '@txo-peer-dep/log'
+import { Log } from '@txo/log'
 const log = new Log('txo.functional.Api.String')
 
 export const compareCaseInsensitive = (left: string, right: string) => {

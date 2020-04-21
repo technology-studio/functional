@@ -7,7 +7,7 @@
  */
 
 import type { LiteralMap } from '@txo/flow'
-import { Log } from '@txo-peer-dep/log'
+import { Log } from '@txo/log'
 const log = new Log('txo.functional.Api.Object')
 
 export const areObjects = (left: any, right: any): boolean => typeof left === 'object' && typeof right === 'object'
