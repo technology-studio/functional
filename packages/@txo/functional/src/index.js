@@ -27,6 +27,7 @@ import {
   nullIfEmpty,
 } from './Api/Validation'
 import {
+  analyseArrays,
   atMostOne,
   findById,
   getLastItem,
@@ -56,6 +57,7 @@ import {
 import { debugDiffObjects } from './Api/Debug'
 
 export {
+  analyseArrays,
   areObjects,
   atMostOne,
   clearUndefinedAttributes,

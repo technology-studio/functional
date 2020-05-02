@@ -48,3 +48,65 @@ export const sequence = (length: number) => {
 export const getLastItem = <ENTITY: Object>(array: $ReadOnlyArray<ENTITY>): ?ENTITY => (
   array[array.length - 1]
 )
+
+export const analyseArrays = <TYPE>(leftList?: TYPE[], rightList?: TYPE[], getUniqueKey: (value: TYPE) => string) => {
+  leftList = leftList || []
+  rightList = rightList || []
+  if (!leftList.length || !rightList.length) {
+    return {
+      union: [...leftList, ...rightList],
+      intersection: [],
+      leftUnique: leftList,
+      rightUnique: rightList,
+    }
+  }
+
+  const intersectionMap = {}
+  const unionMap = {}
+  const leftUniqueMap = {}
+  const rightUniqueMap = {}
+
+  const intersection = []
+  const union = []
+  const leftUnique = []
+  const rightUnique = []
+
+  const prepare = list => list.reduce(({ map, keyList }, value) => {
+    const key = getUniqueKey(value)
+    if (!(key in map)) {
+      map[key] = value
+      keyList.push(key)
+    }
+    return { map, keyList }
+  }, { map: {}, keyList: [] })
+
+  const _left = prepare(leftList)
+  const _right = prepare(rightList)
+
+  const add = (outputList, outputMap, key, map) => {
+    if (!(key in outputMap)) {
+      outputMap[key] = true
+      outputList.push(map[key])
+    }
+  }
+
+  const process = ({ map, keyList }, { map: otherMap }, unique, uniqueMap) => {
+    keyList.forEach(key => {
+      add(union, unionMap, key, map)
+      if (key in otherMap) {
+        add(intersection, intersectionMap, key, map)
+      } else {
+        add(unique, uniqueMap, key, map)
+      }
+    })
+  }
+
+  process(_left, _right, leftUnique, leftUniqueMap)
+  process(_right, _left, rightUnique, rightUniqueMap)
+  return {
+    intersection,
+    union,
+    leftUnique,
+    rightUnique,
+  }
+}
