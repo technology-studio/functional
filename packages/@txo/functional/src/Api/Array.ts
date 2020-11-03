@@ -1,10 +1,8 @@
 /**
- * @Author: Rostislav Simonik <rostislav.simonik>
+ * @Author: Rostislav Simonik <rostislav.simonik@technologystudio.sk>
  * @Date:   2017-07-25T18:05:12+02:00
- * @Email:  rostislav.simonik@technologystudio.sk
  * @Copyright: Technology Studio
- * @flow
- */
+**/
 
 export const intersperseByCallback = <T> (array: T[], callback: (index: number) => T): T[] => {
   return array.reduce((result: T[], element: T, index: number, array: T[]) => {
@@ -16,7 +14,9 @@ export const intersperseByCallback = <T> (array: T[], callback: (index: number) 
   }, [])
 }
 
-export const findById = <ENTITY: { id: string }>(id: ?string, entityList: ENTITY[]): ?ENTITY => {
+export const findById = <ENTITY extends{ id: string }>(
+  id: string | undefined | null, entityList: ENTITY[],
+): ENTITY | null | undefined => {
   return id ? entityList.find(entity => entity.id === id) : null
 }
 
@@ -37,25 +37,37 @@ export const atMostOne = <TYPE>(list: TYPE[]): TYPE | null => {
   return null
 }
 
-export const sequence = (length: number) => {
+export const sequence = (length: number): number[] => {
   const array = []
-  for (var index = 0; index < length; index++) {
+  for (let index = 0; index < length; index++) {
     array.push(index)
   }
   return array
 }
 
-export const getLastItem = <ENTITY: Object>(array: $ReadOnlyArray<ENTITY>): ?ENTITY => (
+export const getLastItem = <ENTITY>(array: ENTITY[]): ENTITY | undefined | null => (
   array[array.length - 1]
 )
 
-export const analyseArrays = <TYPE>(leftList?: TYPE[], rightList?: TYPE[], getUniqueKey: (value: TYPE) => string) => {
-  leftList = leftList || []
-  rightList = rightList || []
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const EMPTY_ARRAY: any[] = []
+
+export const analyseArrays = <TYPE>(
+  // eslint-disable-next-line @typescript-eslint/default-param-last
+  leftList: TYPE[] = EMPTY_ARRAY,
+  // eslint-disable-next-line @typescript-eslint/default-param-last
+  rightList: TYPE[] = EMPTY_ARRAY,
+  getUniqueKey: (value: TYPE) => string,
+): {
+  intersection: TYPE[],
+  union: TYPE[],
+  leftUnique: TYPE[],
+  rightUnique: TYPE[],
+} => {
   if (!leftList.length || !rightList.length) {
     return {
       union: [...leftList, ...rightList],
-      intersection: [],
+      intersection: EMPTY_ARRAY,
       leftUnique: leftList,
       rightUnique: rightList,
     }
@@ -66,12 +78,15 @@ export const analyseArrays = <TYPE>(leftList?: TYPE[], rightList?: TYPE[], getUn
   const leftUniqueMap = {}
   const rightUniqueMap = {}
 
-  const intersection = []
-  const union = []
-  const leftUnique = []
-  const rightUnique = []
+  const intersection: TYPE[] = []
+  const union: TYPE[] = []
+  const leftUnique: TYPE[] = []
+  const rightUnique: TYPE[] = []
 
-  const prepare = list => list.reduce(({ map, keyList }, value) => {
+  const prepare = (list: TYPE[]): { map: Record<string, TYPE>, keyList: string[] } => list.reduce(({ map, keyList }: {
+    map: Record<string, TYPE>,
+    keyList: string[],
+  }, value) => {
     const key = getUniqueKey(value)
     if (!(key in map)) {
       map[key] = value
@@ -83,14 +98,19 @@ export const analyseArrays = <TYPE>(leftList?: TYPE[], rightList?: TYPE[], getUn
   const _left = prepare(leftList)
   const _right = prepare(rightList)
 
-  const add = (outputList, outputMap, key, map) => {
+  const add = (outputList: TYPE[], outputMap: Record<string, boolean>, key: string, map: Record<string, TYPE>): void => {
     if (!(key in outputMap)) {
       outputMap[key] = true
       outputList.push(map[key])
     }
   }
 
-  const process = ({ map, keyList }, { map: otherMap }, unique, uniqueMap) => {
+  const process = (
+    { map, keyList }: { map: Record<string, TYPE>, keyList: string[]},
+    { map: otherMap }: { map: Record<string, TYPE> },
+    unique: TYPE[],
+    uniqueMap: Record<string, boolean>,
+  ): void => {
     keyList.forEach(key => {
       add(union, unionMap, key, map)
       if (key in otherMap) {

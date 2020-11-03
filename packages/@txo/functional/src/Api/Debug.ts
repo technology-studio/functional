@@ -1,20 +1,19 @@
 /**
- * @Author: Rostislav Simonik <rostislav.simonik>
+ * @Author: Rostislav Simonik <rostislav.simonik@technologystudio.sk>
  * @Date:   2018-03-10T07:46:45+01:00
- * @Email:  rostislav.simonik@technologystudio.sk
  * @Copyright: Technology Studio
- * @flow
- */
+**/
 
 import { areObjects } from './Object'
 
-export const debugDiffObjects = (left: any, right: any) => {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
+export const debugDiffObjects = (left: any, right: any): Record<string, unknown> | string | any[] | undefined => {
   if (left && right && areObjects(left, right)) {
-    var result = Object.keys(left).reduce((subResult, key) => {
+    let result = Object.keys(left).reduce((subResult: Record<string, unknown> | undefined, key) => {
       const subLeft = left[key]
       const subRight = right[key]
       if (subLeft !== subRight) {
-        subResult = (subResult || {}: Object)
+        subResult = subResult ?? {}
         subResult[key] = areObjects(subLeft, subRight)
           ? debugDiffObjects(subLeft, subRight)
           : ['DIFF', subLeft, subRight]
@@ -25,12 +24,12 @@ export const debugDiffObjects = (left: any, right: any) => {
       const subLeft = left[key]
       const subRight = right[key]
       if (!Object.prototype.hasOwnProperty.call(left, key)) {
-        subResult = (subResult || {}: Object)
+        subResult = subResult ?? {}
         subResult[key] = ['DIFF', subLeft, subRight]
       }
       return subResult
     }, result)
-    return result || 'DIFF'
+    return result ?? 'DIFF'
   }
   if (!left || !right) {
     return ['DIFF', left, right]

@@ -1,5 +1,2 @@
-flow-typed
-babel.config.js
 packages/**/node_modules/**
 packages/**/lib/**
-packages/**/*.d.ts

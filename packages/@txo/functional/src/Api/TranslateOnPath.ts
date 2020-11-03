@@ -1,10 +1,8 @@
 /**
- * @Author: Rostislav Simonik <rostislav.simonik>
+ * @Author: Rostislav Simonik <rostislav.simonik@technologystudio.sk>
  * @Date:   2018-01-07T21:37:28+01:00
- * @Email:  rostislav.simonik@technologystudio.sk
  * @Copyright: Technology Studio
- * @flow
- */
+**/
 
 import { Log } from '@txo/log'
 
@@ -12,9 +10,10 @@ import { getPathIterator } from './Path'
 
 const log = new Log('txo.functional.Api.TranslateOnPath')
 
-export type ValueStructure<VALUE> = { [string]: ValueStructure<VALUE> | ?VALUE } | ?VALUE
+export type ValueStructure<VALUE> = { [key: string]: ValueStructure<VALUE> | VALUE | undefined } | VALUE | undefined
 
-export type Translate<VALUE> = (value: ?VALUE) => ?VALUE
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Translate<VALUE> = (value: VALUE | undefined) => any
 
 type Options = {
   keepEmptyObjects: boolean,
@@ -29,25 +28,26 @@ const _defaultOptions: Options = {
 }
 
 export const translateOnPath = <VALUE>(
-  path: ?string,
-  value: ?ValueStructure<VALUE>,
+  path: string | undefined,
+  value: ValueStructure<VALUE> | undefined,
   translate: Translate<VALUE>,
-  options: $Shape<Options> = _defaultOptions,
-): ValueStructure<VALUE> | void => {
+  options: Partial<Options> = _defaultOptions,
+): ValueStructure<VALUE> | undefined => {
   return translateOnPathIterator(path ? getPathIterator(path.split('.')) : null, value, translate, options)
 }
 
-const _isResultCandidate = <VALUE>(value: VALUE, options: $Shape<Options>, isTranslateResult: boolean): boolean => (
+const _isResultCandidate = <VALUE>(value: VALUE, options: Partial<Options>, isTranslateResult: boolean): boolean => !!(
   value === null || typeof value !== 'object' || (value && Object.keys(value).length > 0) ||
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   options.keepEmptyObjects || (isTranslateResult && options.keepEmptyObjectsAtTranlateResult)
 )
 
 export const translateOnPathIterator = <VALUE>(
-  pathIterator: ?Iterator<string>,
-  value: ?ValueStructure<VALUE>,
+  pathIterator: Iterator<string> | undefined | null,
+  value: ValueStructure<VALUE> | undefined,
   translate: Translate<VALUE>,
-  options: $Shape<Options> = _defaultOptions,
-): ValueStructure<VALUE> | void => {
+  options: Partial<Options> = _defaultOptions,
+): ValueStructure<VALUE> | undefined => {
   return translateOnPathIteratorInternal(
     pathIterator,
     value,
@@ -57,16 +57,17 @@ export const translateOnPathIterator = <VALUE>(
 }
 
 export const translateOnPathIteratorInternal = <VALUE>(
-  pathIterator: ?Iterator<string>,
-  value: ?ValueStructure<VALUE>,
+  pathIterator: Iterator<string> | undefined | null,
+  value: ValueStructure<VALUE> | undefined,
   translate: Translate<VALUE>,
-  options: $Shape<Options> = _defaultOptions,
-): { isTranslateResult: boolean, result: ValueStructure<VALUE> | void } => {
+  options: Partial<Options> = _defaultOptions,
+): { isTranslateResult: boolean, result: ValueStructure<VALUE> | undefined } => {
   if (pathIterator) {
     const pathIteratorResult = pathIterator.next()
     if (!pathIteratorResult.done) {
       const key: string = pathIteratorResult.value
-      const { [key]: subPrevious, ...subOthers } = value != null && typeof value === 'object' ? value : {}
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const { [key]: subPrevious, ...subOthers } = (value != null && typeof value === 'object' ? value : {}) as Record<string, any>
       if (options.ignoreMissingPath && !subPrevious) {
         return {
           isTranslateResult: false,
@@ -87,7 +88,8 @@ export const translateOnPathIteratorInternal = <VALUE>(
       }
     }
   }
-  const result = translate((value: any))
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const result = translate(value as any)
   log.debug('translateOnPathIterator', { value, options, result })
   return {
     isTranslateResult: true,
