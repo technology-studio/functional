@@ -24,7 +24,8 @@
     "prepare": "yarn build"
   },
   "dependencies": {
-    "@txo/log": "^1.0.0"
+    "@txo/log": "^1.0.0",
+    "utility-types": "^3.10.0"
   },
   "peerDependencies": {
     "@txo-peer-dep/log": "^3.0.0"
