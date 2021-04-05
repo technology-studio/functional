@@ -59,11 +59,11 @@ export const analyseArrays = <TYPE>(
   rightList: TYPE[] = EMPTY_ARRAY,
   getUniqueKey: (value: TYPE) => string,
 ): {
-  intersection: TYPE[],
-  union: TYPE[],
-  leftUnique: TYPE[],
-  rightUnique: TYPE[],
-} => {
+    intersection: TYPE[],
+    union: TYPE[],
+    leftUnique: TYPE[],
+    rightUnique: TYPE[],
+  } => {
   if (!leftList.length || !rightList.length) {
     return {
       union: [...leftList, ...rightList],

@@ -28,10 +28,10 @@ export const copyNotUndefinedAttributes = <
   SOURCE extends Record<string | number | symbol, unknown>,
   DESTINATION extends Record<string | number | symbol, unknown>
 > (
-  source: SOURCE,
-  destination: DESTINATION,
-  sourceAttributeToDestinationAttributeMap: Record<keyof SOURCE, keyof DESTINATION>,
-): DESTINATION => {
+    source: SOURCE,
+    destination: DESTINATION,
+    sourceAttributeToDestinationAttributeMap: Record<keyof SOURCE, keyof DESTINATION>,
+  ): DESTINATION => {
   Object.entries(sourceAttributeToDestinationAttributeMap).forEach(([sourceKey, destinationKey]: [keyof SOURCE, keyof DESTINATION]) => {
     const value = source[sourceKey]
     if (value !== undefined) {
