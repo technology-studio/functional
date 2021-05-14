@@ -5,16 +5,6 @@
  * @Copyright: Technology Studio
 **/
 
-import { Log } from '@txo/log'
-const log = new Log('txo.functional.Api.String')
-
-export const compareCaseInsensitive = (left: string, right: string): number => {
-  log.debug('compareCaseInsensitive', { left, right })
-  const _left = left.toLowerCase()
-  const _right = right.toLowerCase()
-  return _left < _right ? -1 : _left > _right ? 1 : 0
-}
-
 export const concatWithSep = (
   left: string | null | undefined,
   separator: string,

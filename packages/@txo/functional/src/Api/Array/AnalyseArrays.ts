@@ -4,51 +4,6 @@
  * @Copyright: Technology Studio
 **/
 
-export const intersperseByCallback = <T> (array: T[], callback: (index: number) => T): T[] => {
-  return array.reduce((result: T[], element: T, index: number, array: T[]) => {
-    result.push(element)
-    if (index < array.length - 1) {
-      result.push(callback(index))
-    }
-    return result
-  }, [])
-}
-
-export const findById = <ENTITY extends{ id: string }>(
-  id: string | undefined | null, entityList: ENTITY[],
-): ENTITY | null | undefined => {
-  return id ? entityList.find(entity => entity.id === id) : null
-}
-
-export const onlyOne = <TYPE>(list: TYPE[], errorCallback?: () => Error): TYPE => {
-  if (list.length !== 1) {
-    throw errorCallback ? errorCallback() : new Error(`Expected only one item in array (actual: ${list.length}).`)
-  }
-  return list[0]
-}
-
-export const atMostOne = <TYPE>(list: TYPE[], errorCallback?: () => Error): TYPE | null => {
-  if (list.length > 1) {
-    throw errorCallback ? errorCallback() : new Error(`Expected zero or one item in array (actual: ${list.length}).`)
-  }
-  if (list.length === 1) {
-    return list[0]
-  }
-  return null
-}
-
-export const sequence = (length: number): number[] => {
-  const array = []
-  for (let index = 0; index < length; index++) {
-    array.push(index)
-  }
-  return array
-}
-
-export const getLastItem = <ENTITY>(array: ENTITY[]): ENTITY | undefined | null => (
-  array[array.length - 1]
-)
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const EMPTY_ARRAY: any[] = []
 
