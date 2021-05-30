@@ -7,3 +7,4 @@
 export * from './CompareCaseInsensitive'
 export * from './ConcatWithSep'
 export * from './Format'
+export * from './Pad'
