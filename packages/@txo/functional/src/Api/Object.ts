@@ -130,12 +130,12 @@ export const deepObjectEqualsBySchema = (left: any, right: any, scheme: Scheme):
   )
 )
 
-export const removeKeys = <OBJECT extends Record<string, unknown>>(obj: OBJECT, keysToRemove: string[]): Partial<OBJECT> => {
-  const unremovedKeys = Object.keys(obj).filter(key => !keysToRemove.includes(key))
+export const removeKeys = <OBJECT extends Record<string, unknown>, KEYS extends (keyof OBJECT)[]>(obj: OBJECT, keysToRemove: KEYS): Omit<OBJECT, typeof keysToRemove[number]> => {
+  const unremovedKeys = Object.keys(obj).filter((key) => !keysToRemove.includes(key))
   return unremovedKeys.reduce((filteredObject: Record<string, unknown>, key) => {
     filteredObject[key] = obj[key]
     return filteredObject
-  }, {}) as Partial<OBJECT>
+  }, {}) as Omit<OBJECT, typeof keysToRemove[number]>
 }
 
 export const containsPathSegmentList = (
