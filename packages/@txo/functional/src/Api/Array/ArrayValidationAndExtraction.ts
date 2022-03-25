@@ -27,6 +27,21 @@ export const atMostOne = <TYPE>(list: TYPE[], errorCallback?: () => Error): TYPE
   return null
 }
 
+export const first = <ENTITY>(list: ENTITY[], errorCallback?: (() => Error) | undefined): ENTITY => {
+  if (list.length === 0) {
+    throw errorCallback ? errorCallback() : new Error(`Expected at least one item in array (actual: ${list.length}).`)
+  }
+  return list[0]
+}
+
+export const last = <ENTITY>(list: ENTITY[], errorCallback?: (() => Error) | undefined): ENTITY => {
+  if (list.length === 0) {
+    throw errorCallback ? errorCallback() : new Error(`Expected at least one item in array (actual: ${list.length}).`)
+  }
+  return list[list.length - 1]
+}
+
+/** @deprecated use `last` instead */
 export const getLastItem = <ENTITY>(array: ENTITY[]): ENTITY | undefined | null => (
   array[array.length - 1]
 )
