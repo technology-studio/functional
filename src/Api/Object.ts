@@ -4,7 +4,6 @@
  * @Copyright: Technology Studio
 **/
 
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Log } from '@txo/log'
@@ -26,7 +25,7 @@ export const clearUndefinedAttributes = (object: Record<string | number | symbol
 
 export const copyNotUndefinedAttributes = <
   SOURCE extends Record<string | number | symbol, unknown>,
-  DESTINATION extends Record<string | number | symbol, unknown>
+  DESTINATION extends Record<string | number | symbol, unknown>,
 > (
     source: SOURCE,
     destination: DESTINATION,
@@ -77,8 +76,8 @@ export const keysToObject = (keys: string[]): Record<string, unknown> => keys.re
 }, {})
 
 export const shallowObjectDiff = (
-  left: Record<string | number| symbol, unknown> | null | undefined,
-  right: Record<string | number| symbol, unknown> | null | undefined,
+  left: Record<string | number | symbol, unknown> | null | undefined,
+  right: Record<string | number | symbol, unknown> | null | undefined,
   onlyKeys?: string[],
   result: Record<string | number | symbol, boolean> = {},
 ): Record<string, unknown> => {

@@ -4,7 +4,7 @@
  * @Copyright: Technology Studio
 **/
 
-import { translateOnPath } from '@txo/functional'
+import { translateOnPath } from '../../src'
 
 const sample = { a: { b: { c: 1 } } }
 

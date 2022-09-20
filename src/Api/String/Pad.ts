@@ -4,7 +4,6 @@
  * @Copyright: Technology Studio
 **/
 
-// eslint-disable-next-line @typescript-eslint/default-param-last
 export const pad = (text: string | null | undefined = '', width: number, prefixChar?: string): string => {
   // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
   prefixChar = prefixChar || '0'
