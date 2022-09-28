@@ -34,7 +34,7 @@
     "update-boilerplate-version": "./scripts/update-boilerplate-version.sh"
   },
   "dependencies": {
-    "@txo/log": "^2.0.0",
+    "@txo/log": "^2.0.1",
     "utility-types": "^3.10.0"
   },
   "peerDependencies": {
