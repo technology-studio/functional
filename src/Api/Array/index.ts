@@ -10,9 +10,7 @@ export * from './IntersperseByCallback'
 
 export const findById = <ENTITY extends{ id: string }>(
   id: string | undefined | null, entityList: ENTITY[],
-): ENTITY | null | undefined => {
-  return id ? entityList.find(entity => entity.id === id) : null
-}
+): ENTITY | null | undefined => id ? entityList.find(entity => entity.id === id) : null
 
 export const sequence = (length: number): number[] => {
   const array = []

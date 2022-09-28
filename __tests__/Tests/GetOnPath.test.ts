@@ -4,7 +4,7 @@
  * @Copyright: Technology Studio
 **/
 
-import { getOnPath } from '@txo/functional'
+import { getOnPath } from '../../src'
 
 const sample = { a: { b: { c: 1 } } }
 

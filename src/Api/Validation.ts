@@ -11,7 +11,7 @@ const isWrappedType = (value: any): boolean => !!(
   value && typeof value === 'object' && value.constructor && isWrappedTypeName(value.constructor.name) && value.valueOf
 )
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isEmpty = (value: any): boolean => value == null || (Array.isArray(value) && value.length === 0) || value === 0 ||
   value == '' || // eslint-disable-line eqeqeq
   !!(value && isWrappedType(value) && value.valueOf && isEmpty(value.valueOf()))

@@ -32,9 +32,7 @@ export const translateOnPath = <VALUE>(
   value: ValueStructure<VALUE> | undefined,
   translate: Translate<VALUE>,
   options: Partial<Options> = _defaultOptions,
-): ValueStructure<VALUE> | undefined => {
-  return translateOnPathIterator(path ? getPathIterator(path.split('.')) : null, value, translate, options)
-}
+): ValueStructure<VALUE> | undefined => translateOnPathIterator(path ? getPathIterator(path.split('.')) : null, value, translate, options)
 
 const _isResultCandidate = <VALUE>(value: VALUE, options: Partial<Options>, isTranslateResult: boolean): boolean => !!(
   value === null || typeof value !== 'object' || (value && Object.keys(value).length > 0) ||
@@ -47,14 +45,12 @@ export const translateOnPathIterator = <VALUE>(
   value: ValueStructure<VALUE> | undefined,
   translate: Translate<VALUE>,
   options: Partial<Options> = _defaultOptions,
-): ValueStructure<VALUE> | undefined => {
-  return translateOnPathIteratorInternal(
+): ValueStructure<VALUE> | undefined => translateOnPathIteratorInternal(
     pathIterator,
     value,
     translate,
     options,
   ).result
-}
 
 export const translateOnPathIteratorInternal = <VALUE>(
   pathIterator: Iterator<string> | undefined | null,

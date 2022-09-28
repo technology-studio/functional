@@ -8,9 +8,9 @@
 const EMPTY_ARRAY: any[] = []
 
 export const analyseArrays = <TYPE>(
-  // eslint-disable-next-line @typescript-eslint/default-param-last
+
   leftList: TYPE[] = EMPTY_ARRAY,
-  // eslint-disable-next-line @typescript-eslint/default-param-last
+
   rightList: TYPE[] = EMPTY_ARRAY,
   getUniqueKey: (value: TYPE) => string,
 ): {
