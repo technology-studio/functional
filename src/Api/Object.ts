@@ -13,14 +13,14 @@ const log = new Log('txo.functional.Api.Object')
 
 export const areObjects = (left: any, right: any): boolean => typeof left === 'object' && typeof right === 'object'
 
-export const clearUndefinedAttributes = (object: Record<string | number | symbol, unknown>): Record<string | number | symbol, unknown> => {
+export const clearUndefinedAttributes = <OBJECT extends Record<string | number | symbol, unknown>>(object: OBJECT): OBJECT => {
   const newObject: Record<string, unknown> = {}
   Object.keys(object).forEach(key => {
     if (typeof object[key] !== 'undefined') {
       newObject[key] = object[key]
     }
   })
-  return newObject
+  return newObject as OBJECT
 }
 
 export const copyNotUndefinedAttributes = <
