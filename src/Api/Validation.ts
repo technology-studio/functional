@@ -20,5 +20,3 @@ export const nullIfEmpty = <T>(value: T): T | null => isEmpty(value) ? null : va
 
 export const equalsStrictOnValues = <VALUE>(left: VALUE | null | undefined, right: VALUE | null | undefined): boolean =>
   left === right || (left == null && right == null)
-
-export const isNotEmptyString = (value: string | null | undefined): boolean => value != null && value !== ''
