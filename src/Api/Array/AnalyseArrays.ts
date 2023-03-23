@@ -61,7 +61,7 @@ export const analyseArrays = <TYPE>(
   }
 
   const process = (
-    { map, keyList }: { map: Record<string, TYPE>, keyList: string[]},
+    { map, keyList }: { map: Record<string, TYPE>, keyList: string[] },
     { map: otherMap }: { map: Record<string, TYPE> },
     unique: TYPE[],
     uniqueMap: Record<string, boolean>,
