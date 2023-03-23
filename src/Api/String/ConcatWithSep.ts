@@ -5,13 +5,15 @@
  * @Copyright: Technology Studio
 **/
 
+import { isNotEmptyString } from './IsNotEmptyString'
+
 export const concatWithSep = (
   left: string | null | undefined,
   separator: string,
   right: string | null | undefined,
 ): string | null | undefined => (
-  left
-    ? right
+  isNotEmptyString(left)
+    ? isNotEmptyString(right)
       ? left + separator + right
       : left
     : right

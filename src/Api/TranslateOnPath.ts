@@ -7,6 +7,7 @@
 import { Log } from '@txo/log'
 
 import { getPathIterator } from './Path'
+import { isNotEmptyString } from './String'
 
 const log = new Log('txo.functional.Api.TranslateOnPath')
 
@@ -32,12 +33,11 @@ export const translateOnPath = <VALUE>(
   value: ValueStructure<VALUE> | undefined,
   translate: Translate<VALUE>,
   options: Partial<Options> = _defaultOptions,
-): ValueStructure<VALUE> | undefined => translateOnPathIterator(path ? getPathIterator(path.split('.')) : null, value, translate, options)
+): ValueStructure<VALUE> | undefined => translateOnPathIterator(isNotEmptyString(path) ? getPathIterator(path.split('.')) : null, value, translate, options)
 
 const _isResultCandidate = <VALUE>(value: VALUE, options: Partial<Options>, isTranslateResult: boolean): boolean => !!(
-  value === null || typeof value !== 'object' || (value && Object.keys(value).length > 0) ||
-  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-  options.keepEmptyObjects || (isTranslateResult && options.keepEmptyObjectsAtTranlateResult)
+  value === null || typeof value !== 'object' || (value != null && Object.keys(value).length > 0) ||
+  (options.keepEmptyObjects ?? false) || (isTranslateResult && (options.keepEmptyObjectsAtTranlateResult ?? false))
 )
 
 export const translateOnPathIterator = <VALUE>(
@@ -58,13 +58,13 @@ export const translateOnPathIteratorInternal = <VALUE>(
   translate: Translate<VALUE>,
   options: Partial<Options> = _defaultOptions,
 ): { isTranslateResult: boolean, result: ValueStructure<VALUE> | undefined } => {
-  if (pathIterator) {
+  if (pathIterator != null) {
     const pathIteratorResult = pathIterator.next()
-    if (!pathIteratorResult.done) {
+    if (!(pathIteratorResult.done ?? false)) {
       const key: string = pathIteratorResult.value
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const { [key]: subPrevious, ...subOthers } = (value != null && typeof value === 'object' ? value : {}) as Record<string, any>
-      if (options.ignoreMissingPath && !subPrevious) {
+      if ((options.ignoreMissingPath ?? false) && (subPrevious == null || !isNotEmptyString(subPrevious))) {
         return {
           isTranslateResult: false,
           result: value,

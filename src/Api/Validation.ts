@@ -8,13 +8,13 @@ const isWrappedTypeName = (name: string | null | undefined): boolean => name ===
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const isWrappedType = (value: any): boolean => !!(
-  value && typeof value === 'object' && value.constructor && isWrappedTypeName(value.constructor.name) && value.valueOf
+  value != null && typeof value === 'object' && value.constructor != null && isWrappedTypeName(value.constructor.name) && value.valueOf != null
 )
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isEmpty = (value: any): boolean => value == null || (Array.isArray(value) && value.length === 0) || value === 0 ||
   value == '' || // eslint-disable-line eqeqeq
-  !!(value && isWrappedType(value) && value.valueOf && isEmpty(value.valueOf()))
+  !!(value != null && isWrappedType(value) && value.valueOf != null && isEmpty(value.valueOf()))
 
 export const nullIfEmpty = <T>(value: T): T | null => isEmpty(value) ? null : value
 

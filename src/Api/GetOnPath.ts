@@ -5,18 +5,19 @@
 **/
 
 import { getPathIterator } from './Path'
+import { isNotEmptyString } from './String'
 
 export const getOnPath = <VALUE>(path?: string | null, value?: Record<string, unknown> | null): VALUE | null | undefined => (
-  getOnPathIterator<VALUE>(path ? getPathIterator(path.split('.')) : null, value)
+  getOnPathIterator<VALUE>(isNotEmptyString(path) ? getPathIterator(path.split('.')) : null, value)
 )
 
 export const getOnPathIterator = <VALUE>(
   pathIterator: Iterator<string> | null | undefined,
   value?: Record<string, unknown> | null | undefined,
 ): VALUE | null | undefined => {
-  if (pathIterator) {
+  if (pathIterator != null) {
     const pathIteratorResult = pathIterator.next()
-    if (!pathIteratorResult.done && value && typeof value === 'object') {
+    if (!(pathIteratorResult.done ?? false) && (value != null) && typeof value === 'object') {
       const key: string = pathIteratorResult.value
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return getOnPathIterator(pathIterator, value[key] as any)

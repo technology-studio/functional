@@ -19,7 +19,7 @@ export const analyseArrays = <TYPE>(
     leftUnique: TYPE[],
     rightUnique: TYPE[],
   } => {
-  if (!leftList.length || !rightList.length) {
+  if ((leftList.length === 0) || (rightList.length === 0)) {
     return {
       union: [...leftList, ...rightList],
       intersection: EMPTY_ARRAY,
