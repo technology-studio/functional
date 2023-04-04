@@ -13,8 +13,5 @@ export const pad = (text: string | null | undefined = '', width: number, prefixC
   while (prefix.length < width - text.length) {
     prefix = prefix + prefixChar
   }
-  for (let index = 0; index < width - text.length; index++) {
-    prefix += prefixChar
-  }
   return prefix + text
 }
