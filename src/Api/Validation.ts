@@ -14,7 +14,7 @@ const isWrappedType = (value: any): boolean => !!(
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isEmpty = (value: any): boolean => value == null || (Array.isArray(value) && value.length === 0) || value === 0 ||
   value == '' || // eslint-disable-line eqeqeq
-  !!(value != null && isWrappedType(value) && value.valueOf != null && isEmpty(value.valueOf()))
+  (value != null && isWrappedType(value) && value.valueOf != null && isEmpty(value.valueOf()))
 
 export const nullIfEmpty = <T>(value: T): T | null => isEmpty(value) ? null : value
 
