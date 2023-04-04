@@ -4,13 +4,15 @@
  * @Copyright: Technology Studio
 **/
 
+import { isNotEmptyString } from '../String'
+
 export * from './AnalyseArrays'
 export * from './ArrayValidationAndExtraction'
 export * from './IntersperseByCallback'
 
 export const findById = <ENTITY extends{ id: string }>(
   id: string | undefined | null, entityList: ENTITY[],
-): ENTITY | null | undefined => id ? entityList.find(entity => entity.id === id) : null
+): ENTITY | null | undefined => isNotEmptyString(id) ? entityList.find(entity => entity.id === id) : null
 
 export const sequence = (length: number): number[] => {
   const array = []

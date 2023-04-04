@@ -49,14 +49,14 @@ export const shallowObjectEquals = (
     return true
   }
 
-  if (!left || !right) {
+  if ((left == null) || (right == null)) {
     return false
   }
   const _left = left
   const _right = right
 
   let _onlyKeys: string[]
-  if (onlyKeys) {
+  if (onlyKeys != null) {
     _onlyKeys = onlyKeys
   } else {
     const leftKeys = Object.keys(left)
@@ -85,9 +85,8 @@ export const shallowObjectDiff = (
     return result
   }
 
-  if (!left || !right) {
-    // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    return keysToObject(Object.keys(left || right || {}))
+  if ((left == null) || (right == null)) {
+    return keysToObject(Object.keys((left != null) || (right != null) || {}))
   }
   const _left = left
   const _right = right
@@ -111,8 +110,8 @@ type Scheme = {
 
 export const deepObjectEqualsBySchema = (left: any, right: any, scheme: Scheme): boolean => (
   left === right || !!(
-    left && typeof left === 'object' &&
-    right && typeof right === 'object' &&
+    left != null && typeof left === 'object' &&
+    right != null && typeof right === 'object' &&
     Object.keys(scheme).every(schemeKey => {
       const subScheme = scheme[schemeKey]
       switch (typeof subScheme) {
@@ -142,18 +141,18 @@ export const containsPathSegmentList = (
   pathSegmentList: string[],
 ): boolean => !!(
   pathSegmentList.length === 0 ||
-  (obj && typeof obj === 'object' && containsPathSegmentList(
+  (obj != null && typeof obj === 'object' && containsPathSegmentList(
     obj[pathSegmentList[0]],
     pathSegmentList.slice(1),
   ))
 )
 
 export const isObject = (obj: any): obj is Record<string | number | symbol, unknown> => (
-  obj && typeof obj === 'object'
+  obj != null && typeof obj === 'object'
 )
 
 export const isEmptyObject = <OBJECT>(obj?: OBJECT | null): boolean => !!(
-  obj && Object.keys(obj).length === 0
+  obj != null && Object.keys(obj).length === 0
 )
 
 export const deepMergeIgnoreNil = (left: any, right: any, key?: string): Record<string | number | symbol, unknown> => {
