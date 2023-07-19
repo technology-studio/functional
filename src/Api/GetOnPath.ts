@@ -19,8 +19,7 @@ export const getOnPathIterator = <VALUE>(
     const pathIteratorResult = pathIterator.next()
     if (!(pathIteratorResult.done ?? false) && (value != null) && typeof value === 'object') {
       const key: string = pathIteratorResult.value
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return getOnPathIterator(pathIterator, value[key] as any)
+      return getOnPathIterator(pathIterator, value[key] as Record<string, unknown> | null | undefined)
     }
   }
   return value as VALUE | null | undefined

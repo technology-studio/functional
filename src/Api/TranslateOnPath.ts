@@ -13,8 +13,7 @@ const log = new Log('txo.functional.Api.TranslateOnPath')
 
 export type ValueStructure<VALUE> = { [key: string]: ValueStructure<VALUE> | VALUE | undefined } | VALUE | undefined
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Translate<VALUE> = (value: VALUE | undefined) => any
+export type Translate<VALUE> = (value: VALUE | undefined) => unknown
 
 type Options = {
   keepEmptyObjects: boolean,
@@ -61,10 +60,9 @@ export const translateOnPathIteratorInternal = <VALUE>(
   if (pathIterator != null) {
     const pathIteratorResult = pathIterator.next()
     if (!(pathIteratorResult.done ?? false)) {
-      const key: string = pathIteratorResult.value
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const { [key]: subPrevious, ...subOthers } = (value != null && typeof value === 'object' ? value : {}) as Record<string, any>
-      if ((options.ignoreMissingPath ?? false) && (subPrevious == null || !isNotEmptyString(subPrevious))) {
+      const key = pathIteratorResult.value as keyof ValueStructure<VALUE>
+      const { [key]: subPrevious, ...subOthers } = (value != null && typeof value === 'object' ? value : {}) as ValueStructure<VALUE>
+      if ((options.ignoreMissingPath ?? false) && (subPrevious == null || !isNotEmptyString(subPrevious as string))) {
         return {
           isTranslateResult: false,
           result: value,
@@ -84,11 +82,10 @@ export const translateOnPathIteratorInternal = <VALUE>(
       }
     }
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const result = translate(value as any)
+  const result = translate(value as VALUE | undefined)
   log.debug('translateOnPathIterator', { value, options, result })
   return {
     isTranslateResult: true,
-    result,
+    result: result as ValueStructure<VALUE> | undefined,
   }
 }

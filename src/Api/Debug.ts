@@ -6,8 +6,7 @@
 
 import { areObjects } from './Object'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const debugDiffObjects = (left: any, right: any): Record<string, unknown> | string | any[] | undefined => {
+export const debugDiffObjects = (left: Record<string, unknown>, right: Record<string, unknown>): Record<string, unknown> | string | unknown[] | undefined => {
   if (left != null && right != null && areObjects(left, right)) {
     let result = Object.keys(left).reduce((subResult: Record<string, unknown> | undefined, key) => {
       const subLeft = left[key]
@@ -15,7 +14,10 @@ export const debugDiffObjects = (left: any, right: any): Record<string, unknown>
       if (subLeft !== subRight) {
         subResult = subResult ?? {}
         subResult[key] = areObjects(subLeft, subRight)
-          ? debugDiffObjects(subLeft, subRight)
+          ? debugDiffObjects(
+            subLeft as Record<string, unknown>,
+            subRight as Record<string, unknown>,
+          )
           : ['DIFF', subLeft, subRight]
       }
       return subResult
