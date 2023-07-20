@@ -1,3 +1,10 @@
+## [4.6.1](https://github.com/technology-studio/functional/compare/v4.6.0...v4.6.1) (2023-07-20)
+
+
+### Bug fixes
+
+* **deps:** update eslint txo packages ([#268](https://github.com/technology-studio/functional/issues/268)) ([4611e8b](https://github.com/technology-studio/functional/commit/4611e8ba7605bbf9c046839152495941607c855f))
+
 ## [4.6.0](https://github.com/technology-studio/functional/compare/v4.5.2...v4.6.0) (2023-03-07)
 
 
