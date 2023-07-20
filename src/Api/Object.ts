@@ -11,8 +11,6 @@ import type { ValuesType } from 'utility-types'
 
 const log = new Log('txo.functional.Api.Object')
 
-export const areObjects = (left: any, right: any): boolean => typeof left === 'object' && typeof right === 'object'
-
 export const clearUndefinedAttributes = <OBJECT extends Record<string | number | symbol, unknown>>(object: OBJECT): OBJECT => {
   const newObject: Record<string, unknown> = {}
   Object.keys(object).forEach(key => {
@@ -34,7 +32,7 @@ export const copyNotUndefinedAttributes = <
   Object.entries(sourceAttributeToDestinationAttributeMap).forEach(([sourceKey, destinationKey]: [keyof SOURCE, keyof DESTINATION]) => {
     const value = source[sourceKey]
     if (value !== undefined) {
-      destination[destinationKey] = value as any
+      destination[destinationKey] = value as DESTINATION[keyof DESTINATION]
     }
   })
   return destination
@@ -108,10 +106,10 @@ type Scheme = {
   [key: string]: Scheme | boolean,
 }
 
-export const deepObjectEqualsBySchema = (left: any, right: any, scheme: Scheme): boolean => (
+export const deepObjectEqualsBySchema = (left: unknown, right: unknown, scheme: Scheme): boolean => (
   left === right || !!(
-    left != null && typeof left === 'object' &&
-    right != null && typeof right === 'object' &&
+    isObject(left) &&
+    isObject(right) &&
     Object.keys(scheme).every(schemeKey => {
       const subScheme = scheme[schemeKey]
       switch (typeof subScheme) {
@@ -119,7 +117,11 @@ export const deepObjectEqualsBySchema = (left: any, right: any, scheme: Scheme):
           return left[schemeKey] === right[schemeKey]
         }
         case 'object': {
-          return deepObjectEqualsBySchema(left[schemeKey], right[schemeKey], subScheme)
+          return deepObjectEqualsBySchema(
+            left[schemeKey],
+            right[schemeKey],
+            subScheme,
+          )
         }
         default:
           throw new Error(`Unknown scheme type ${typeof subScheme} for key ${schemeKey}`)
@@ -137,11 +139,11 @@ export const removeKeys = <OBJECT extends Record<string, unknown>, KEYS extends 
 }
 
 export const containsPathSegmentList = (
-  obj: any,
+  obj: unknown,
   pathSegmentList: string[],
 ): boolean => !!(
   pathSegmentList.length === 0 ||
-  (obj != null && typeof obj === 'object' && containsPathSegmentList(
+  (isObject(obj) && containsPathSegmentList(
     obj[pathSegmentList[0]],
     pathSegmentList.slice(1),
   ))
@@ -155,7 +157,11 @@ export const isEmptyObject = <OBJECT>(obj?: OBJECT | null): boolean => !!(
   obj != null && Object.keys(obj).length === 0
 )
 
-export const deepMergeIgnoreNil = (left: any, right: any, key?: string): Record<string | number | symbol, unknown> => {
+export const deepMergeIgnoreNil = (
+  left: unknown,
+  right: unknown,
+  key?: string,
+): unknown => {
   log.debug(`deepMergeIgnoreNil - ${key ?? ''}`, { left, right })
   if (left === right) {
     return left
@@ -167,7 +173,11 @@ export const deepMergeIgnoreNil = (left: any, right: any, key?: string): Record<
         ...left,
         ...right,
       }).reduce((nextObj: Record<string | number | symbol, unknown>, key) => {
-        nextObj[key] = deepMergeIgnoreNil(left[key], right[key], key)
+        nextObj[key] = deepMergeIgnoreNil(
+          left[key],
+          right[key],
+          key,
+        )
         return nextObj
       }, {})
       : left
@@ -175,7 +185,7 @@ export const deepMergeIgnoreNil = (left: any, right: any, key?: string): Record<
   return right ?? left
 }
 
-export const removeSubtree = (obj: any, tree: any): any => {
+export const removeSubtree = (obj: unknown, tree: Record<string, unknown>): unknown => {
   if (isObject(obj) && !Array.isArray(obj)) {
     return Object.keys(obj).reduce((object: Record<string, unknown>, key) => {
       const subtree = tree[key]

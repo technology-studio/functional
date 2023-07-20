@@ -4,23 +4,23 @@
  * @Copyright: Technology Studio
 **/
 
+import { isObject } from './Object'
 import { getPathIterator } from './Path'
 import { isNotEmptyString } from './String'
 
-export const getOnPath = <VALUE>(path?: string | null, value?: Record<string, unknown> | null): VALUE | null | undefined => (
+export const getOnPath = <VALUE>(path?: string | null, value?: unknown): VALUE | null | undefined => (
   getOnPathIterator<VALUE>(isNotEmptyString(path) ? getPathIterator(path.split('.')) : null, value)
 )
 
 export const getOnPathIterator = <VALUE>(
   pathIterator: Iterator<string> | null | undefined,
-  value?: Record<string, unknown> | null | undefined,
+  value?: unknown,
 ): VALUE | null | undefined => {
   if (pathIterator != null) {
     const pathIteratorResult = pathIterator.next()
-    if (!(pathIteratorResult.done ?? false) && (value != null) && typeof value === 'object') {
+    if (!(pathIteratorResult.done ?? false) && isObject(value)) {
       const key: string = pathIteratorResult.value
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      return getOnPathIterator(pathIterator, value[key] as any)
+      return getOnPathIterator(pathIterator, value[key])
     }
   }
   return value as VALUE | null | undefined

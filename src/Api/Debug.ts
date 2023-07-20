@@ -4,18 +4,25 @@
  * @Copyright: Technology Studio
 **/
 
-import { areObjects } from './Object'
+import { isObject } from './Object'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const debugDiffObjects = (left: any, right: any): Record<string, unknown> | string | any[] | undefined => {
-  if (left != null && right != null && areObjects(left, right)) {
+export const debugDiffObjects = (left: unknown, right: unknown): unknown => {
+  if (
+    left != null &&
+    right != null &&
+    isObject(left) &&
+    isObject(right)
+  ) {
     let result = Object.keys(left).reduce((subResult: Record<string, unknown> | undefined, key) => {
       const subLeft = left[key]
       const subRight = right[key]
       if (subLeft !== subRight) {
         subResult = subResult ?? {}
-        subResult[key] = areObjects(subLeft, subRight)
-          ? debugDiffObjects(subLeft, subRight)
+        subResult[key] = isObject(subLeft) && isObject(subRight)
+          ? debugDiffObjects(
+            subLeft,
+            subRight,
+          )
           : ['DIFF', subLeft, subRight]
       }
       return subResult

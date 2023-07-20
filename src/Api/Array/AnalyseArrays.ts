@@ -4,14 +4,13 @@
  * @Copyright: Technology Studio
 **/
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const EMPTY_ARRAY: any[] = []
+const EMPTY_ARRAY: unknown[] = []
 
 export const analyseArrays = <TYPE>(
 
-  leftList: TYPE[] = EMPTY_ARRAY,
+  leftList: TYPE[] = EMPTY_ARRAY as TYPE[],
 
-  rightList: TYPE[] = EMPTY_ARRAY,
+  rightList: TYPE[] = EMPTY_ARRAY as TYPE[],
   getUniqueKey: (value: TYPE) => string,
 ): {
     intersection: TYPE[],
@@ -22,7 +21,7 @@ export const analyseArrays = <TYPE>(
   if ((leftList.length === 0) || (rightList.length === 0)) {
     return {
       union: [...leftList, ...rightList],
-      intersection: EMPTY_ARRAY,
+      intersection: EMPTY_ARRAY as TYPE[],
       leftUnique: leftList,
       rightUnique: rightList,
     }

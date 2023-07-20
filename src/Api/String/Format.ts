@@ -5,4 +5,4 @@
  * @Copyright: Technology Studio
 **/
 
-export const format = (value: string, params: Record<string, unknown>): string => value.replace(/{{\s*(\w+)\s*}}/g, (matchValue, param) => param in params ? String(params[param]) : matchValue)
+export const format = (value: string, params: Record<string, unknown>): string => value.replace(/{{\s*(\w+)\s*}}/g, (matchValue, param) => param in params ? String(params[param as keyof typeof params]) : matchValue)
