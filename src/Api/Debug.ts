@@ -4,19 +4,24 @@
  * @Copyright: Technology Studio
 **/
 
-import { areObjects } from './Object'
+import { isObject } from './Object'
 
-export const debugDiffObjects = (left: Record<string, unknown>, right: Record<string, unknown>): Record<string, unknown> | string | unknown[] | undefined => {
-  if (left != null && right != null && areObjects(left, right)) {
+export const debugDiffObjects = (left: unknown, right: unknown): unknown => {
+  if (
+    left != null &&
+    right != null &&
+    isObject(left) &&
+    isObject(right)
+  ) {
     let result = Object.keys(left).reduce((subResult: Record<string, unknown> | undefined, key) => {
       const subLeft = left[key]
       const subRight = right[key]
       if (subLeft !== subRight) {
         subResult = subResult ?? {}
-        subResult[key] = areObjects(subLeft, subRight)
+        subResult[key] = isObject(subLeft) && isObject(subRight)
           ? debugDiffObjects(
-            subLeft as Record<string, unknown>,
-            subRight as Record<string, unknown>,
+            subLeft,
+            subRight,
           )
           : ['DIFF', subLeft, subRight]
       }
