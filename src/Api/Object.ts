@@ -108,8 +108,8 @@ type Scheme = {
 
 export const deepObjectEqualsBySchema = (left: unknown, right: unknown, scheme: Scheme): boolean => (
   left === right || !!(
-    left != null && isObject(left) &&
-    right != null && isObject(right) &&
+    isObject(left) &&
+    isObject(right) &&
     Object.keys(scheme).every(schemeKey => {
       const subScheme = scheme[schemeKey]
       switch (typeof subScheme) {
@@ -143,7 +143,7 @@ export const containsPathSegmentList = (
   pathSegmentList: string[],
 ): boolean => !!(
   pathSegmentList.length === 0 ||
-  (obj != null && isObject(obj) && containsPathSegmentList(
+  (isObject(obj) && containsPathSegmentList(
     obj[pathSegmentList[0]],
     pathSegmentList.slice(1),
   ))
@@ -174,8 +174,8 @@ export const deepMergeIgnoreNil = (
         ...right,
       }).reduce((nextObj: Record<string | number | symbol, unknown>, key) => {
         nextObj[key] = deepMergeIgnoreNil(
-          left[key] as Record<string | number | symbol, unknown>,
-          right[key] as Record<string | number | symbol, unknown>,
+          left[key],
+          right[key],
           key,
         )
         return nextObj
