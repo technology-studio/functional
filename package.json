@@ -37,7 +37,7 @@
     "node": ">=18.0.0"
   },
   "dependencies": {
-    "@txo/log": "^2.0.3",
+    "@txo/log": "^2.0.4",
     "utility-types": "^3.10.0"
   },
   "peerDependencies": {
