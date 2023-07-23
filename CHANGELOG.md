@@ -1,3 +1,10 @@
+## [4.6.8](https://github.com/technology-studio/functional/compare/v4.6.7...v4.6.8) (2023-07-23)
+
+
+### Bug fixes
+
+* **deps:** update dependency @txo/log to ^2.0.8 ([950a6b0](https://github.com/technology-studio/functional/commit/950a6b07fa74e1afa5e538b61414886d4d282868))
+
 ## [4.6.7](https://github.com/technology-studio/functional/compare/v4.6.6...v4.6.7) (2023-07-22)
 
 
