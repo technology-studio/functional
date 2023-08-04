@@ -4,8 +4,6 @@
  * @Copyright: Technology Studio
 **/
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { Log } from '@txo/log'
 import type { ValuesType } from 'utility-types'
 
@@ -149,11 +147,13 @@ export const containsPathSegmentList = (
   ))
 )
 
-export const isObject = (obj: any): obj is Record<string | number | symbol, unknown> => (
+/** @deprecated - use isObject from @txo/types */
+export const isObject = (obj: unknown): obj is Record<string | number | symbol, unknown> => (
   obj != null && typeof obj === 'object'
 )
 
-export const isEmptyObject = <OBJECT>(obj?: OBJECT | null): boolean => !!(
+/** @deprecated - use isEmptyObject from @txo/types */
+export const isEmptyObject = <OBJECT>(obj?: OBJECT | null): obj is OBJECT => !!(
   obj != null && Object.keys(obj).length === 0
 )
 
