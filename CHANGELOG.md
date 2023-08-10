@@ -1,3 +1,10 @@
+## [4.6.12](https://github.com/technology-studio/functional/compare/v4.6.11...v4.6.12) (2023-08-10)
+
+
+### Bug fixes
+
+* add deprecations for `isNotEmptyString` and Object functions ([#291](https://github.com/technology-studio/functional/issues/291)) ([3ade47a](https://github.com/technology-studio/functional/commit/3ade47adf75508673d9c69e9518970d1844d6fbb))
+
 ## [4.6.11](https://github.com/technology-studio/functional/compare/v4.6.10...v4.6.11) (2023-07-24)
 
 
