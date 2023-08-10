@@ -4,4 +4,5 @@
  * @Copyright: Technology Studio
 **/
 
+/** @deprecated - use isNotEmptyString from @txo/types */
 export const isNotEmptyString = (value: string | null | undefined): value is string => value != null && value !== ''
