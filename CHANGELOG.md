@@ -1,3 +1,10 @@
+## [4.6.13](https://github.com/technology-studio/functional/compare/v4.6.12...v4.6.13) (2023-09-20)
+
+
+### Bug fixes
+
+* recreate yarn.lock ([#348](https://github.com/technology-studio/functional/issues/348)) ([7007b8c](https://github.com/technology-studio/functional/commit/7007b8ccce76e8fb24ad29738fb4679464a02e13))
+
 ## [4.6.12](https://github.com/technology-studio/functional/compare/v4.6.11...v4.6.12) (2023-08-10)
 
 
