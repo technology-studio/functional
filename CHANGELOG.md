@@ -1,3 +1,17 @@
+## [4.6.19](https://github.com/technology-studio/functional/compare/v4.6.18...v4.6.19) (2024-04-09)
+
+
+### Bug fixes
+
+* **deps:** update dependency @txo/log to ^2.0.16 ([c02a29b](https://github.com/technology-studio/functional/commit/c02a29b844eba833c32aba7f1068d590e4253ef8))
+
+## [4.6.18](https://github.com/technology-studio/functional/compare/v4.6.17...v4.6.18) (2024-04-09)
+
+
+### Bug fixes
+
+* **deps:** update dependency @txo-peer-dep/log to ^4.0.4 ([b0515de](https://github.com/technology-studio/functional/commit/b0515de0ac3ec89ab3383c3949d7632684abd418))
+
 ## [4.6.17](https://github.com/technology-studio/functional/compare/v4.6.16...v4.6.17) (2023-11-11)
 
 
