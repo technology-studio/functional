@@ -58,7 +58,7 @@
     "npm-check-updates": "^16.14.20",
     "rimraf": "^6.0.1",
     "ts-jest": "^29.2.3",
-    "typescript": "^5.5.3",
+    "typescript": "^5.5.4",
     "utility-types": "^3.11.0"
   }
 }
