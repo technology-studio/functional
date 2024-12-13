@@ -1,0 +1,13 @@
+[
+  "@typescript-eslint/no-magic-numbers",
+  "@typescript-eslint/no-unsafe-type-assertion",
+  "@stylistic/arrow-parens",
+  "@typescript-eslint/no-duplicate-type-constituents",
+  "complexity",
+  "@stylistic/operator-linebreak",
+  "@typescript-eslint/prefer-destructuring",
+  "@typescript-eslint/no-unnecessary-type-parameters",
+  "@typescript-eslint/init-declarations",
+  "@typescript-eslint/no-unnecessary-condition",
+  "eslint-comments/require-description"
+]
